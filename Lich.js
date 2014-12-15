@@ -1,4 +1,4 @@
-/* 
+/*
     Lich.js - JavaScript audio/visual live coding language
     Copyright (C) 2012 Chad McKinney
 
@@ -11,13 +11,13 @@
 	Licensed under the Simplified BSD License:
 
 	Redistribution and use in source and binary forms, with or without
-	modification, are permitted provided that the following conditions are met: 
+	modification, are permitted provided that the following conditions are met:
 
 	1. Redistributions of source code must retain the above copyright notice, this
-	   list of conditions and the following disclaimer. 
+	   list of conditions and the following disclaimer.
 	2. Redistributions in binary form must reproduce the above copyright notice,
 	   this list of conditions and the following disclaimer in the documentation
-	   and/or other materials provided with the distribution. 
+	   and/or other materials provided with the distribution.
 
 	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 	ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -31,7 +31,7 @@
 	SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 	The views and conclusions contained in the software and documentation are those
-	of the authors and should not be interpreted as representing official policies, 
+	of the authors and should not be interpreted as representing official policies,
 	either expressed or implied, of the FreeBSD Project.
 */
 
@@ -42,38 +42,38 @@
 var ctrlDown = false;
 
 function trim11 (str) // Trim white space from front and back of string
-{	
-    
+{
+
 	str = str.replace(/^\s+/, '');
-    
-	for (var i = str.length - 1; i >= 0; i--) 
+
+	for (var i = str.length - 1; i >= 0; i--)
 	{
-        if (/\S/.test(str.charAt(i))) 
+        if (/\S/.test(str.charAt(i)))
         {
             str = str.substring(0, i + 1);
             break;
         }
     }
-    
+
 	return str;
 }
 
-function getInputSelection(el) 
+function getInputSelection(el)
 {
     var start = 0, end = 0, normalizedValue, range,
         textInputRange, len, endRange;
 
-    if(typeof el.selectionStart == "number" && typeof el.selectionEnd == "number") 
+    if(typeof el.selectionStart == "number" && typeof el.selectionEnd == "number")
 	{
         start = el.selectionStart;
         end = el.selectionEnd;
-    } 
+    }
 
-	else 
+	else
 	{
         range = document.selection.createRange();
 
-        if(range && range.parentElement() == el) 
+        if(range && range.parentElement() == el)
 		{
             len = el.value.length;
             normalizedValue = el.value.replace(/\r\n/g, "\n");
@@ -88,22 +88,22 @@ function getInputSelection(el)
             endRange = el.createTextRange();
             endRange.collapse(false);
 
-            if(textInputRange.compareEndPoints("StartToEnd", endRange) > -1) 
+            if(textInputRange.compareEndPoints("StartToEnd", endRange) > -1)
 			{
                 start = end = len;
-            } 
+            }
 
-			else 
+			else
 			{
                 start = -textInputRange.moveStart("character", -len);
                 start += normalizedValue.slice(0, start).split("\n").length - 1;
 
-                if(textInputRange.compareEndPoints("EndToEnd", endRange) > -1) 
+                if(textInputRange.compareEndPoints("EndToEnd", endRange) > -1)
 				{
                     end = len;
-                } 
-				
-				else 
+                }
+
+				else
 				{
                     end = -textInputRange.moveEnd("character", -len);
                     end += normalizedValue.slice(0, end).split("\n").length - 1;
@@ -118,37 +118,37 @@ function getInputSelection(el)
     };
 }
 
-function getCaretPosition () 
+function getCaretPosition ()
 {
 	var ctrl = document.getElementById("terminal"+clientName);
 	var CaretPos = 0;	// IE Support
-	
-	if(document.selection) 
+
+	if(document.selection)
 	{
 		ctrl.focus();
 		var Sel = document.selection.createRange();
 		Sel.moveStart('character', -ctrl.value.length);
 		CaretPos = Sel.text.length;
 	}
-	
+
 	// Firefox support
 	else if(ctrl.selectionStart || ctrl.selectionStart == '0')
 		CaretPos = ctrl.selectionStart;
-	
+
 	return (CaretPos);
 }
 
 function setCaretPosition(pos)
 {
 	var ctrl = document.getElementById("terminal"+clientName);
-	
+
 	if(ctrl.setSelectionRange)
 	{
 		ctrl.focus();
 		ctrl.setSelectionRange(pos,pos);
 	}
-	
-	else if(ctrl.createTextRange) 
+
+	else if(ctrl.createTextRange)
 	{
 		var range = ctrl.createTextRange();
 		// range.collapse(true);
@@ -164,8 +164,8 @@ function insertText(text, caretOffset) // Text to insert, offset for caret after
 	currentCaretPosition = getCaretPosition();
 	textarea = document.getElementById("terminal"+clientName);
     newCaretPosition = currentCaretPosition + text.length;
-    
-    textarea.value = textarea.value.substring(0, currentCaretPosition) + text 
+
+    textarea.value = textarea.value.substring(0, currentCaretPosition) + text
     	+ textarea.value.substring(currentCaretPosition, textarea.value.length);
 
     setCaretPosition(newCaretPosition + caretOffset);
@@ -174,7 +174,7 @@ function insertText(text, caretOffset) // Text to insert, offset for caret after
 
 // http://css-tricks.com/snippets/javascript/support-tabs-in-textareas/
 function tab()
-{	
+{
 	return insertText("    ", 0);
 }
 
@@ -191,25 +191,25 @@ function currentLine(name)
 	lineLength = 62;
 	cursor = getInputSelection(terminal).end;
 	textArea = terminal.value;
-	
+
 	if(terminal.selectionStart == terminal.selectionEnd)
 	{
 		// If the cursor is at the end of the line, push it back so we can find the entire line
-		if(textArea[cursor] == '\n' && textArea[cursor - 1] != '\n') 
+		if(textArea[cursor] == '\n' && textArea[cursor - 1] != '\n')
 			cursor -= 1;
-			
+
 		for(start = cursor; start >= 0 && textArea[start] != '\n'; --start);
 		for(end = cursor; end < textArea.length && textArea[end] != '\n'; ++end);
-		
+
 		start += 1; // Remove the initial line break
 	}
-	
+
 	else
 	{
 		start = terminal.selectionStart;
 		end = terminal.selectionEnd;
 	}
-	
+
 	return  {
 		line: terminal.value.substring(start, end), // Return the subtring of the text area, which is the currently selected line
 		end: end
@@ -229,12 +229,12 @@ function currentLineCodeMirror(cm)
 	{
 		/*
 		// If the cursor is at the end of the line, push it back so we can find the entire line
-		if(textArea[cursor] == '\n' && textArea[cursor - 1] != '\n') 
+		if(textArea[cursor] == '\n' && textArea[cursor - 1] != '\n')
 			cursor -= 1;
-			
+
 		for(start = cursor; start >= 0 && textArea[start] != '\n'; --start);
 		for(end = cursor; end < textArea.length && textArea[end] != '\n'; ++end);
-		
+
 		start += 1; // Remove the initial line break*/
 
 		return  {
@@ -242,7 +242,7 @@ function currentLineCodeMirror(cm)
 			end: end
 		};
 	}
-	
+
 	else
 	{
 		return {
@@ -252,7 +252,7 @@ function currentLineCodeMirror(cm)
 }
 
 function keyDown(thisEvent)
-{	
+{
 	switch(thisEvent.keyCode)
 	{
 	case 9: // Tab key
@@ -262,7 +262,7 @@ function keyDown(thisEvent)
 		break;
 
 	case 13: // Enter key
-	
+
 		if(ctrlDown)
 		{
 			parseCurrentLine();
@@ -270,7 +270,7 @@ function keyDown(thisEvent)
 			(arguments[0].preventDefault) ? arguments[0].preventDefault() : arguments[0].returnValue = false;
         	return false; // do nothing
 		}
-	
+
 		break;
 
 	case 16: // shift
@@ -306,9 +306,9 @@ function keyDown(thisEvent)
 		break;
 
 	case 222: // Quotation marks
-		
+
 		// Doesn't work with UK keyboards
-		//if(shiftDown) // " double 
+		//if(shiftDown) // " double
 		//{
 		//	return insertText("\"\"", -1);
 		//}
@@ -317,7 +317,7 @@ function keyDown(thisEvent)
 		if(!shiftDown) {
 			return insertText("'", -1);
 		}
-		
+
 		break;*/
 	}
 
@@ -362,7 +362,7 @@ function parseCurrentLine(editor)
 	{
 		str = editor.session.getTextRange(selectionRange);
 	}
-	
+
 	//Lich.post("Str = " + str);
 	//str = line.line;
 	broadcastLichCode(str);
@@ -374,12 +374,12 @@ function parseCurrentLine(editor)
 			var ast = Lich.parse(str); // interactive parsing
 			// var ast = Lich.parseLibrary(str); // For library parsing testing
 			//Lich.post(Lich.showAST(ast));
-			
+
 			//Lich.VM.Print(Lich.compileAST(ast));
 			var res = Lich.compileAST(ast);
 			//Lich.VM.Print(res);
 			//Lich.post("JS Source> " + res);
-				
+
 			if(res instanceof Array)
 			{
 				for(var i = 0; i < res.length; ++i)
@@ -394,13 +394,13 @@ function parseCurrentLine(editor)
 			}
 		}
 	}
-	
+
 	catch(e)
 	{
-		if(Lich.Lexer.yy.lexer.yylloc.first_line != Infinity 
+		if(Lich.Lexer.yy.lexer.yylloc.first_line != Infinity
 			&& Lich.Lexer.yy.lexer.yylloc.first_column != Infinity)
 		{
-			Lich.post(clientName + ": " +e + " found at [line, column]: [" + Lich.Lexer.yy.lexer.yylloc.first_line 
+			Lich.post(clientName + ": " +e + " found at [line, column]: [" + Lich.Lexer.yy.lexer.yylloc.first_line
 			+ ", " + Lich.Lexer.yy.lexer.yylloc.first_column + "]");
 		}
 
@@ -481,10 +481,10 @@ function compileLich()
 		Soliton.init();
 		Lich.scheduler = new Soliton.SteadyScheduler();
 		Lich.scheduler.start();
-		
+
 		var oRequest = new XMLHttpRequest();
 		var sURL = "http://"
-		         + self.location.hostname
+		         + self.location.host
 		         + "/Library/Prelude.lich";
 
 		oRequest.open("GET",sURL,false);
@@ -499,8 +499,8 @@ function compileLich()
 			//Lich.VM.Print(eval(preludeSource));
 			eval(preludeSource);
 		}
-		
-		else 
+
+		else
 		{
 			Lich.post("Unable to load Prelude module.");
 		}
@@ -511,18 +511,18 @@ function compileLich()
   			}
 		}, false);
 	}
-	
+
 	catch(e)
 	{
 		Lich.post(clientName + ": " + e);
 		throw e;
 	}
-	
+
 	/*
 	CloudChamber.setup(document.getElementById("canvas"), 24, undefined, Lich.post); // Create the CloudChamber instance
 
 	var lichShaderArray = new Array();
-	
+
 	for(var i = 0; i < CloudChamber.shaderArray.length; ++i)
 	{
 		lichShaderArray.push(CloudChamber.shaderArray[i]);

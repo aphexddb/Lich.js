@@ -1,23 +1,23 @@
-<!-- 
+<!--
     Lich.js - JavaScript a networked audio/visual live coding language
     Copyright (C) 2012-2013 Chad McKinney
-	
+
 	http://chadmckinneyaudio.com/
 	seppukuzombie@gmail.com
-	
+
 	LICENSE
 	=======
 
 	Licensed under the Simplified BSD License:
 
 	Redistribution and use in source and binary forms, with or without
-	modification, are permitted provided that the following conditions are met: 
+	modification, are permitted provided that the following conditions are met:
 
 	1. Redistributions of source code must retain the above copyright notice, this
-	   list of conditions and the following disclaimer. 
+	   list of conditions and the following disclaimer.
 	2. Redistributions in binary form must reproduce the above copyright notice,
 	   this list of conditions and the following disclaimer in the documentation
-	   and/or other materials provided with the distribution. 
+	   and/or other materials provided with the distribution.
 
 	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 	ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -31,7 +31,7 @@
 	SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 	The views and conclusions contained in the software and documentation are those
-	of the authors and should not be interpreted as representing official policies, 
+	of the authors and should not be interpreted as representing official policies,
 	either expressed or implied, of the FreeBSD Project.
 -->
 
@@ -51,7 +51,7 @@
 	<script type="text/javascript" src="third-party/ace/ace.js"></script>
 
 	<!-- <script type="text/javascript" src="third-party/cycle.js"></script> -->
-	<!--
+	
 	<script type="text/javascript" src="Compiler/Objects.js"></script>
 	<script type="text/javascript" src="Compiler/VM.js"></script>
 	<script type="text/javascript" src="Compiler/Compiler.js"></script>
@@ -60,7 +60,7 @@
 	<script type="text/javascript" src="CloudChamber.js/CloudChamber.js"></script>
 	<script type="text/javascript" src="CloudChamber.js/MarchingCubes.js"></script>
 	<script type="text/javascript" src="Parser/ParseUtility.js"></script>
-	<script type="text/javascript" src="Parser/Types.js"></script>	
+	<script type="text/javascript" src="Parser/Types.js"></script>
 	<script type="text/javascript" src="Parser/Lexeme.js"></script>
 	<script type="text/javascript" src="Parser/preL.js"></script>
 	<script type="text/javascript" src="Parser/iterL.js"></script>
@@ -72,8 +72,8 @@
 	<script type="text/javascript" src="Networking/LichClient.js"></script>
 	<script type="text/javascript" src="Networking/LichChat.js"></script>
 	<script type="text/javascript" src="Networking/LichTerminal.js"></script>
-	<script type="text/javascript" src="Pieces/MountainsOfMadnessPanel.js"></script>-->
-	<script type="text/javascript" src="lich.min.js"></script>
+	<script type="text/javascript" src="Pieces/MountainsOfMadnessPanel.js"></script>
+	<!--<script type="text/javascript" src="lich.min.js"></script>-->
 	<script src="socket.io/socket.io.js"></script>
 	<!--<script type="text/javascript" src="Pieces/MountainsOfMadness.js"></script>-->
 </head>
@@ -91,7 +91,7 @@
     </div>
     <textarea id="post" rows="6" spellcheck="false" readonly="true">Lich.js&#10;</textarea>
     </div>
-        
+
     <script LANGUAGE="JavaScript" type="text/javascript">
             compileLich();
     </script>
@@ -103,10 +103,10 @@
     **** Lich.js is designed for collaboration. If nobody is in the server with you, invite a friend! ****
     If you want to chat with any other players you can use alt-c to enter chat messages.
 
-    Lich.js is a new language for live coding music and graphics directly in a web browser. 
-    This is a little demo page to give you an idea of what's possible. 
-    The language isn't quite done yet (beta!), and there's still some bugs, but there is much fun to be had. 
-    The syntax is similar to Haskell, but if you haven't used it, don't be scared. 
+    Lich.js is a new language for live coding music and graphics directly in a web browser.
+    This is a little demo page to give you an idea of what's possible.
+    The language isn't quite done yet (beta!), and there's still some bugs, but there is much fun to be had.
+    The syntax is similar to Haskell, but if you haven't used it, don't be scared.
 
     If you want to get the source code or learn how to run your own server go to https://github.com/ChadMcKinney/Lich.js
 
@@ -131,7 +131,7 @@
 -- The keyword let is used to declare variables at global scope. The next line defines monster as the string Cthulhu.
 let monster = "Cthulhu"
 
--- Functions are evaluated simply by supplying arguments with spaces. 
+-- Functions are evaluated simply by supplying arguments with spaces.
 reverse monster
 
 -- New functions can be composed by using argument names after variable declarations, like so:
@@ -141,7 +141,7 @@ addFive 2
 addFive 1337
 
 
--- One last thing before we make some noise. Let's talk about partial application. 
+-- One last thing before we make some noise. Let's talk about partial application.
 -- Partial application is used heavily in Lich.js so it will be good to get used to it.
 -- Normally a language requires you to supply all the arguments for a function for it to return a result. For example:
 add 2 3 -- Evaluates to 5
@@ -162,21 +162,21 @@ addTwo 5 -- returns 7
 (3/) 6 -- 3 / 6 = 0.5
 (4-) 2 -- 4 - 2 = 2
 
--- because of the haskell like syntax (-4) just means negative 4. We have to use subtract to get what we want. 
+-- because of the haskell like syntax (-4) just means negative 4. We have to use subtract to get what we want.
 (subtract 4) 2 -- 2 - 4 = -2
 
 -- If this is a bit confusing, don't worry, as you go through the examples you'll see how they're used and how useful they are!
 
 -------------------------------------------------------------
--- OK. You came here for music right? Let's make some noise. 
+-- OK. You came here for music right? Let's make some noise.
 
 let sineWave = play (sin 440)
 stop sineWave -- when you've heard enough
 
--- Hacker Tip #2: Ctrl-Period will make all the sound stop. 
+-- Hacker Tip #2: Ctrl-Period will make all the sound stop.
 -- Sometimes you accidently make zombies. Ctrl-. is your nuclear option.
 
--- Lich.js makes it easy to get sound going and there's a large collection of custom functions to do just that. 
+-- Lich.js makes it easy to get sound going and there's a large collection of custom functions to do just that.
 -- Evaluate the next line to see the collection of audio functions.
 ugenList
 
@@ -185,7 +185,7 @@ let sawz = saw 40 >> lowpass 792 15 >> play
 stop sawz
 
 -- What's going on here? We're using the >> operator to chain different functions together.
--- The >> operator just passes the left hand side to the function on the right. 
+-- The >> operator just passes the left hand side to the function on the right.
 -- This is useful for audio because it makes function chains look like a signal path, like guitar pedals.
 -- In the previous example we have a saw wave at 40hz fed into a lowpass filter with a cutoff of 792 hz and 15 for the res.
 -- If you want to know what arguments a particular function has, just evaluate it with no arguments. For example:
@@ -219,7 +219,7 @@ sawSynth (d2f bartok (choose [-12..12])) >> play
 scaleList
 
 -- We can add modifiers to a sequence by using the pipe character |
--- After the pipe | we need to provide a function. 
+-- After the pipe | we need to provide a function.
 -- Here we're creating a new function from d2f minor. Partial application FTW!
 sawMelody ~> sawSynth 0 1 2 3 4 5 6 7 | (d2f minor)
 
@@ -235,7 +235,7 @@ stop sawMelody -- When you've heard enough
 
 -- The ~> operator creates a new Solo Stream. The first argument is a synth definition (sawSynth from above)
 -- After that we get a list of numbers. The | pipe indicates that we want to use a modifier on these values.
--- The d2f function simply translates the numbers as scale degrees into frequencies in hz. 
+-- The d2f function simply translates the numbers as scale degrees into frequencies in hz.
 -- If that's a bit too much, don't worry, just make your pattern look like above and you're in business.
 
 -- This melody is a little fast, wouldn't it be nice if we could use rests in our melody?
@@ -244,7 +244,7 @@ sawMelody ~> sawSynth 5 5 5 _ 4 4 _ 7 7 _ 1 11 1 12 2 _ 4 0 _ | (d2f minor)
 -- The _ is a rest, and no synth will be played on those beats. We can use [] to make faster notes:
 sawMelody ~> sawSynth 0 1 2 3 [4 5] [6 7] | (d2f minor)
 
--- Note that there's no commas in these []. That's because we're using a special syntax, this is unique to these pattern streams. 
+-- Note that there's no commas in these []. That's because we're using a special syntax, this is unique to these pattern streams.
 -- How about we mix _ and []
 sawMelody ~> sawSynth 0 _ 1 2 3 [_ 4] [_ 5] [6 7] | (d2f minor)
 stop sawMelody -- when you've heard enough
@@ -268,7 +268,7 @@ drums +> bd hh sn hh bd [hh hh] sn [hh sn]
 drums +> [_ hh] hh
 drums +> [bd bd]
 
--- We can use modifiers to change the durations. 
+-- We can use modifiers to change the durations.
 -- The | (*2) makes all the durations twice as long
 drums +> bd hh sn hh bd [hh hh] sn [hh sn] | (*2)
 drums +> bd hh sn hh bd [hh hh] sn [hh sn] -- back to normal
@@ -282,7 +282,7 @@ sawMelody ~> sawSynth (psin 0.1 >> prange 0 10) | (d2f minor)
 -- Lets change it up more
 sawMelody ~> sawSynth (psin 0.2 >> prange 0 10 >> pwarp (psin 0.7)) | (d2f minor)
 
--- how about some bass? 
+-- how about some bass?
 -- HackerTip #3: Head phones or nicer speakers will make everything sound better
 sawBass ~> sawSynth (psin 0.2 >> prange -2 -16 >> pstutter 14) | (d2f minor)
 
@@ -293,7 +293,7 @@ sawHarmony ~> sawSynth (psaw 0.15 >> prange -2 5 >> pstutter 6)  | (d2f minor)
 drums +> bd hh sn hh [hh bd] [hh hh] sn [hh [sn sn]] | (*2)
 
 -- When you've heard enough, compile these in turn
-stop drums 
+stop drums
 stop sawMelody
 stop sawBass
 stop sawHarmony
@@ -301,7 +301,7 @@ stop sawHarmony
 
 {-
     Pattern functions
-    
+
     Lich.js contains several functions that begin with the letter p, such as pseq, pstutter, and pwarp.
     These functions are pattern functions. These functions return lambdas that when given a beat will return a value.
     Look over the code below to get a feel for what the different pattern functions can do.
@@ -414,12 +414,12 @@ stop siner2
 
 {-
     beatPattern
-    
-    
-    You can't use a pattern function such as pseq or pstutter inside a synth definition normally. 
-    However by using the beatPattern function we can embed a pattern function in a synth definition, 
+
+
+    You can't use a pattern function such as pseq or pstutter inside a synth definition normally.
+    However by using the beatPattern function we can embed a pattern function in a synth definition,
     and the value according to the current beat will be returned.
-    
+
     For speed we can use bp instead of beatPattern.
 -}
 
@@ -457,10 +457,10 @@ beatSynthesizer +> bSyn bSyn bSyn bSyn2 bSyn2 bSyn2 | (/2) -- Faster
 
 -- More beatPattern fun
 let bSyn => sin freq >> pan -1 >> perc 0 1 0.25
-    where 
+    where
         freq = psin 0.1 >> prange 0 6 >> pmul (pseq [1,2]) >> pwarp (psquare 0.2) >> bp >> d2f pelog
-    
-    
+
+
 let bSyn2 => sin freq >> pan 1 >> perc 0 1 0.25
     where
         freq = psin 0.075 >> prange 0 6 >> pmul (pseq [1,2,3]) >> pwarp (psquare 0.15) >> bp >> d2f pelog
@@ -474,15 +474,15 @@ stop beatSynthesizer
     pbind
 
     Above we've shown solo streams (~>) and impulse streams (+>), but there's a third kind of stream generator, pbind.
-    
+
     pbind is similar to the SuperCollider Pbind and Pdef
-    It takes: 
+    It takes:
         a pattern name (used to store in a global dictionary for updates via redefinition)
         a synth definition (can be a pattern of synth definitions)
         a list of arguments (each argument can be a pattern)
         and a duration (can be pattern)
-        
-    
+
+
     pbind name synthDef arguments duration
 -}
 
@@ -499,9 +499,9 @@ let testp = pbind "test" (pseq [t,u,t,t,u,u,u]) [pshuf [0..5], dur] dur
     where
         dur = (pseq [1/2,1/2,1])
 
--- even more patterning 
+-- even more patterning
 let testp = pbind "test" syn [freqs >> pstutter 3, dur] dur
-    where 
+    where
         syn = pseq [t,u] >> pwarp (psaw 0.3 >> pmul 10)
         freqs = pseries 0 7 >> pmod (pseq [1..10] >> pwarp (psaw 0.03 >> pmul 20) >> pstutter 2)
         dur = pseq (map (div 1) [1..6]) >> pwarp (psaw 0.7 >> pmul 10) >> pstutter 3
@@ -517,7 +517,7 @@ stop testp
 let mc = Chord minor 4
 
 -- chordProgression returns a pbind that just sequences through the chords. They can be queried using ::value
-let doom = chordProgression "doom" [mc [0,2,4], mc [1,3,5], mc [2,4,6], mc [3,5,7], mc [4,6,8], mc [5,7,9]] [8] 
+let doom = chordProgression "doom" [mc [0,2,4], mc [1,3,5], mc [2,4,6], mc [3,5,7], mc [4,6,8], mc [5,7,9]] [8]
 
 let synth freq => saw freq >> lowpass (freq * 4) 1 >> perc 0 0.6 0.5
 
@@ -526,14 +526,14 @@ let synth freq => saw freq >> lowpass (freq * 4) 1 >> perc 0 0.6 0.5
 bass ~> synth (pseries 0 (pseq [-2,5]) >> pfold -2 6) | (c2f doom)
 stop bass
 
--- We can play block chords by using the map function in conjunction with the blockChord function. 
+-- We can play block chords by using the map function in conjunction with the blockChord function.
 -- Make sure the doom progression is playing!
 -- Note: block chords don't work in patterns yet :(
 let chordSynth freqs => map sf freqs
     where
         sf freq = saw freq >> lowpass (freq * 16) 0 >> perc 0 0.3 0.3
 
-								 
+
 map play $ chordSynth $ blockChord doom
 
 
@@ -541,8 +541,8 @@ map play $ chordSynth $ blockChord doom
 map play (chordSynth (blockChord doom))
 
 
-		   
-{- 
+
+{-
     Buffers
 -}
 
@@ -556,7 +556,7 @@ stop noisySynth
 
 -- Even more chaotic
 let noisySynth = sin (noiseL 2 >> exprange 200 2000) >> rec >> gain 0.5 >> play
-    where 
+    where
         rec = recPlayBuf (newBuffer sampleRate) (noiseL 7) (sin (noiseX 1 >> exprange 1 40) >> gain (noiseL 3 >> range 0 4))
 
 stop noisySynth
@@ -572,9 +572,9 @@ stop recSequence
 
 
 
-{- 
+{-
     Effects and Buses
-    
+
     We can route audio using the auxIn and auxOut ugens
     By default there are 10 global aux buses, but you can also create local buses.
 -}
@@ -603,7 +603,7 @@ stop s3
 -- We can also use a localBus so as to not collide with anything else that might use a particular auxillary bus
 let s4 = feed >> exprange 40 160 >> square >> gain 0.2 >> delay 1 0.5 >> auxThrough feed >> gain 2 >> play
     where feed = localBus 1 -- local bus!
-    
+
 stop s4
 
 -- Filters and feed back go great together. fir is a good choice because it's more stable than an iir.
@@ -611,8 +611,8 @@ stop s4
 let feedSynth = sq >> add (auxIn 0 >> delay (1/6) 0) >> fil >> limiter -3 >> auxThrough 0 >> gain 0.3 >> play
     where
         sq = square (saw 1 >> exprange 1 20000)
-        fil = fir [random (-1/x) (1/x) | x <- [1..20]] -- haskell-like list comprehensions 
-        
+        fil = fir [random (-1/x) (1/x) | x <- [1..20]] -- haskell-like list comprehensions
+
 stop feedSynth
 
 
@@ -620,8 +620,8 @@ stop feedSynth
 
 {-
     Graphics
-    
-    Careful, the graphics can really bog down the editor! 
+
+    Careful, the graphics can really bog down the editor!
 
     The graphics library is still young and needs more development.
     At the moment it's very stateful, which isn't ideal, but hey, it works! ...ish
@@ -630,7 +630,7 @@ stop feedSynth
 initGraphics 0 -- MUST DO THIS FIRST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 setBackground (random 0 255) (random 0 255) (random 0 255)
 let s = sphere [random -100 100, random -100 100, random -10 10] 50 [random 0 255, random 0 255, random 0 255]
-let c = cube [random -100 100, random -100 100, random -100 100] [25, 25, 25] [random 0 (2*pi), random 0 (2*pi), random 0 (2*pi)] [0,200,150] 
+let c = cube [random -100 100, random -100 100, random -100 100] [25, 25, 25] [random 0 (2*pi), random 0 (2*pi), random 0 (2*pi)] [0,200,150]
 
 setShader $ choose shaders
 deleteMesh s
@@ -640,7 +640,7 @@ deleteScene
 shaders
 
 let s = sphere [random -100 100, random -100 100, random -10 10] 50 [random 0 255, random 0 255, random 0 255]
-let c = cube [random -100 100, random -100 100, random -100 100] [25, 25, 25] [random 0 (2*pi), random 0 (2*pi), random 0 (2*pi)] [0,200,150] 
+let c = cube [random -100 100, random -100 100, random -100 100] [25, 25, 25] [random 0 (2*pi), random 0 (2*pi), random 0 (2*pi)] [0,200,150]
 
 
 setShaders $ map (choose) $ replicate 2 shaders
@@ -751,7 +751,7 @@ let meshSynth => s >> wireframe (choose [true, false]) >> po >> co >> li
         po = setPosition [random -10 10, random -10 10, random -10 10]
         co = setColor [random 0 255, random 0 255, random 0 255]
         li = linear [random -1 1, random -1 1, random -1 1]
-        
+
 let meshSynth2 => c >> wireframe (choose [true, false]) >> po >> co >> li
     where
         po = setPosition [random -10 10, random -10 10, random -10 10]
@@ -769,7 +769,7 @@ clearShaders 0
 stop meshSeq
 deleteScene 0
 
-										   
+
 
 
 
@@ -782,7 +782,7 @@ deleteScene 0
 
 
 </textarea>
-	
+
     <script LANGUAGE="JavaScript" type="text/javascript">
 	  fillClientTerminal(document.getElementById("demoCode").value);
 	  connectToWebSocketServer();

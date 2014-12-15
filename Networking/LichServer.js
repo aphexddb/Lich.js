@@ -4,40 +4,40 @@ var url = require("url"),
     app = require('http').createServer(handler),
     io = require('socket.io').listen(app),
     fs = require('fs'),
-    port = 80
+    port = 8000
 
 app.listen(port);
 
 function handler(request, response) {
-    var uri = url.parse(request.url).pathname, 
+    var uri = url.parse(request.url).pathname,
         filename = path.join(process.cwd(), uri);
 
     fs.exists = fs.exists || require('path').exists;
     fs.existsSync = fs.existsSync || require('path').existsSync;
 
-    fs.exists(filename, function(exists) 
+    fs.exists(filename, function(exists)
     {
-        if(!exists) 
+        if(!exists)
         {
             response.writeHead(404, {"Content-Type": "text/plain"});
             response.write("404 Not Found\n");
             response.end();
             return;
         }
- 
-        if (fs.statSync(filename).isDirectory()) 
+
+        if (fs.statSync(filename).isDirectory())
             filename += '/Lich.html';
- 
-        fs.readFile(filename, "binary", function(err, file) 
+
+        fs.readFile(filename, "binary", function(err, file)
         {
-            if(err) 
-            {        
+            if(err)
+            {
                 response.writeHead(500, {"Content-Type": "text/plain"});
                 response.write(err + "\n");
                 response.end();
                 return;
             }
- 
+
             response.writeHead(200);
             response.write(file, "binary");
             response.end();
@@ -121,9 +121,9 @@ io.sockets.on('connection', function (socket) {
                 console.log("couldn't load file: " + fileName);
                 console.log(err.message);
             }
-        
+
             socket.emit('ReadFileClient',data);
-        });    
+        });
     });
 
     socket.on('CompileLib',function(libName)
@@ -139,9 +139,9 @@ io.sockets.on('connection', function (socket) {
                 console.log("couldn't load file: " + libName);
                 console.log(err.message);
             }
-        
+
             socket.emit('CompileLibClient',data);
-        });    
+        });
     });
 });
 
@@ -168,7 +168,7 @@ function disconnect(socket,address)
     var usersToDelete = [];
 
     for (var i=0;i<users.length;i++)
-    { 
+    {
         if(users[i].address == address)
         {
             usersToDelete.push(users[i]);
@@ -191,12 +191,12 @@ function disconnect(socket,address)
 function containsUsersWithThatName(user)
 {
     for (var i=0;i<users.length;i++)
-    { 
+    {
         if(users[i].name == user.name)
         {
             return true;
         }
-    }   
+    }
 
     return false;
 }
@@ -205,7 +205,7 @@ function printUsers()
 {
     console.log("CurrentUsers:[\n");
     for (var i=0;i<users.length;i++)
-    { 
+    {
         console.log("   " + users[i].name + " - " + users[i].address/* + ":" + users[i].address.port*/ + ",\n");
     }
     console.log("];\n");
